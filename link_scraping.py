@@ -51,10 +51,10 @@ def ViewBot(browser):
                     job = 'http://www.linkedin.com'+job
                 browser.get(job)
             else:
-                print "I'm Lost Exiting"
+                print ("I'm Lost Exiting")
                 break
         #Output make option for this
-        print "[+] "+ browser.title+ "Visited! \n("+ str(count)+ "/"+ str(len(pList))+") Visited/Queue"
+        print ("[+] "+ browser.title+ "Visited! \n("+ str(count)+ "/"+ str(len(pList))+") Visited/Queue")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -72,7 +72,7 @@ def main():
     passElement.submit()
 
     os.system('clear')
-    print "[+] Success! Logged In, Bot Starting!"
+    print ("[+] Success! Logged In, Bot Starting!")
     ViewBot(browser)
     browser.close()
 
