@@ -23,6 +23,39 @@ def getID(url):
     pUrl = urlparse.urlparse(url)
     return urlparse.parse_qs(pUrl.query)['id'][0]
 
+def ViewBot(browser):
+    visited = {}
+    pList = []
+    count = 0
+    while True:
+        time.sleep(random.uniform(3.5, 6.9))
+        page = BeautifulSoup(browser.page_source)
+        people = getPeopleLinks(page)
+        if people:
+            for person in people:
+                ID = getID(person)
+                if ID not in visited:
+                    pList.append(person)
+                    visited[ID] = 1
+        if pList: #If there is people to look at , then look at them
+            person = pList.pop()
+            browser.get(person)
+            count += 1
+        else: #otherwise find people via the job pages
+            jobs = getJobLinks(page)
+            if jobs:
+                job = random.choice(jobs)
+                root = 'http://www.linkedin.com'
+                roots = 'http://www.linkedin.com'
+                if root not in job or roots not in job:
+                    job = 'http://www.linkedin.com'+job
+                browser.get(job)
+            else:
+                print "I'm Lost Exiting"
+                break
+        #Output make option for this
+        print "[+] "+ browser.title+ "Visited! \n("+ str(count)+ "/"+ str(len(pList))+") Visited/Queue"
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("email", help="linkedin email")
@@ -47,4 +80,23 @@ if __name__ == "__main__":
 
     main()
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
