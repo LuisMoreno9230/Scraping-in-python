@@ -22,3 +22,29 @@ def getJobLinks(page):
 def getID(url):
     pUrl = urlparse.urlparse(url)
     return urlparse.parse_qs(pUrl.query)['id'][0]
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("email", help="linkedin email")
+    parser.add_argument("password", help="linkedin password")
+    args = parser.parse_args()
+
+    browser = webdriver.Firefox()
+    browser.get("https://linkedin.com/uas/login")
+
+    emailElement = browser.find_element_by_id("session_key-login")
+    emailElement.send_keys(args.email)
+    passElement = browser.find_element_by_id("session_password-login")
+    passElement.send_keys(args.password)
+    passElement.submit()
+
+    os.system('clear')
+    print "[+] Success! Logged In, Bot Starting!"
+    ViewBot(browser)
+    browser.close()
+
+if __name__ == "__main__":
+
+    main()
+
+    
